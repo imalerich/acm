@@ -1,0 +1,25 @@
+package MirrorMirror;
+
+import java.util.Scanner;
+
+public class MirrorMirror {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		while (s.hasNextLine()) {
+			String out = proc(s.nextLine());
+		}
+	}
+
+	public static String proc(String line) {
+		if (shouldTerminate(line)) {
+			return "";
+		}
+		
+		return "";
+	}
+	
+	public static boolean shouldTerminate(String line) {
+		return line.equals("#");
+	}
+}

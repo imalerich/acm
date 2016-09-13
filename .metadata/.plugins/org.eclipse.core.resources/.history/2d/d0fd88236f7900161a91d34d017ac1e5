@@ -1,0 +1,14 @@
+package MirrorMirror;
+
+import java.util.Scanner;
+
+public class MirrorMirror {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+	}
+
+	public static String proc(String line) {
+		//
+	}
+}

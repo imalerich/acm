@@ -1,0 +1,37 @@
+package MirrorMirror;
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class MirrorMirror {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		while (s.hasNextLine()) {
+			String out = proc(s.nextLine());
+			if (out.length() == 0) {
+				break;
+			}
+			
+			System.out.println(out);
+		}
+	}
+
+	public static String proc(String line) {
+		if (shouldTerminate(line)) {
+			return "";
+		}
+		
+		HashMap<K, V> mirror = new HashMap();
+		mirror.put("b", "d");
+		mirror.put("d", "b");
+		mirror.put("p", "q");
+		mirror.put("q", "p");
+		
+		return "";
+	}
+	
+	public static boolean shouldTerminate(String line) {
+		return line.equals("#");
+	}
+}
