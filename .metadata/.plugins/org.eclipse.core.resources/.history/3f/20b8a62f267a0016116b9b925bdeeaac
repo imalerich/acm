@@ -1,0 +1,119 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Tribute {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+//		int count = s.nextInt();
+//		s.nextLine(); // Skip the remainder of the count line.
+		int count = 1;
+		
+		for (int i=0; i<count; i++) {
+			proc(s.nextLine());
+		}
+	}
+	
+	public static void proc(String line) {
+		ArrayList<Character> buffer = new ArrayList<Character>();
+		int cursor = 0;
+		
+		// Process each command input by the user.
+		for (int i=0; i<line.length(); i++) {
+			cursor = procCommand(line.charAt(i), buffer, cursor);
+		}
+		
+		// Set the current location of the cursor
+		buffer.add(cursor, '^');
+		
+		// Convert the buffer to a string for output.
+		StringBuilder b = new StringBuilder(buffer.size());
+		for (Character c : buffer) { b.append(c); };
+		System.out.println(b.toString());
+	}
+	
+	public static int procCommand(char cmd, ArrayList<Character> buffer, int cursor) {
+		switch (cmd) {
+		case 'x': {
+			buffer.remove(--cursor);
+			break;
+		}
+		case 'K': {
+			for (cursor--; cursor>=0; cursor--) {
+				if (buffer.get(cursor) == ' ') {
+					break;
+				} else {
+					buffer.remove(cursor);
+				}
+			}
+			
+			cursor++;
+			break;
+		}
+		case 'c': {
+			Character c = buffer.get(cursor-1);
+			buffer.add(cursor++, c);
+			break;
+		}
+		case 'D': {
+			ArrayList<Character> dup = new ArrayList<Character>();
+			for (int i=cursor-1; i>=0; i--) {
+				if (buffer.get(i) == ' ') {
+					break;
+				} else {
+					dup.add(0, buffer.get(i));
+				}
+			}
+			
+			for (Character c : dup) {
+				buffer.add(cursor++, c);
+			}
+			
+			break;
+		}
+		case 'R': {
+			ArrayList<Character> rev = new ArrayList<Character>();
+			for (int i=cursor-1; i>=0; i--) {
+				if (buffer.get(i) == ' ') {
+					break;
+				} else {
+					rev.add(0, buffer.get(i));
+				}
+			}
+			
+			for (int i=0; i<rev.size(); i++) {
+				int index = cursor - rev.size() + i;
+			}
+			break;
+		}
+		case 'p': {
+			break;
+		}
+		case 'W': {
+			break;
+		}
+		case 'h': {
+			cursor--;
+		}
+			break;
+		case 'L': {
+			cursor++;
+			break;
+		}
+		case 'f': {
+			cursor = 0;
+			break;
+		}
+		case 'G': {
+			cursor = buffer.size();
+			break;
+		}
+		default: {
+			buffer.add(cursor++, cmd);
+			break;
+		}
+		}
+		
+		return cursor;
+	}
+}
