@@ -25,7 +25,7 @@ public class Egypt {
 				r = remainder.sub(unit);
 				r.reduce();
 			}
-			
+						
 			// we have found a unit that works, set our remainder
 			remainder = r;
 			
@@ -34,6 +34,7 @@ public class Egypt {
 			out += unit.denominator;
 		}
 		
+		System.out.println(out);
 		return true;
 	}
 	
@@ -97,21 +98,14 @@ class Fraction implements Comparable {
 	}
 	
 	long gcd() {
-		long n = numerator;
-		long d = denominator;
-		
-		if (numerator == 1) {
-			return 1;
+		long a = numerator;
+		long b = denominator;
+		while (b > 0) {
+			long tmp = b;
+			b = a % b;
+			a = tmp;
 		}
 		
- 		while (n != d) {
-			if (n > d) {
-				n -= d;
-			} else {
-				d -= n;
-			}			
-		}
-		
-		return n;
+		return a;
 	}
 }

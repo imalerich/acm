@@ -1,0 +1,114 @@
+import java.util.Scanner;
+import java.lang.Double;
+
+public class Egypt {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		while (proc(s.nextLine())) { }
+	}
+	
+	public static boolean proc(String line) {
+		Fraction remainder = new Fraction(line);
+		if (shouldTerminate(remainder)) {
+			return false;
+		}
+		
+		String out = "";
+		while (remainder.toDouble() > 1/1000000.0) {
+			Fraction unit = new Fraction(1, remainder.largestUnit());
+			Fraction r = remainder.sub(unit);
+			r.reduce();
+			
+			while (r.denominator > 1000000) {
+				unit.denominator++;
+				r = remainder.sub(unit);
+				System.out.println(unit);
+				System.out.println(remainder);
+				r.reduce();
+			}
+			
+			System.out.println();
+			
+			// we have found a unit that works, set our remainder
+			remainder = r;
+			
+			// append the unit fraction (with a space if necessary) to our output
+			out += out.length() > 0 ? " " : "";
+			out += unit.denominator;
+		}
+		
+		System.out.println(out);
+		return true;
+	}
+	
+	public static boolean shouldTerminate(Fraction f) {
+		return f.numerator == 0 && f.denominator == 0;
+	}
+}
+
+class Fraction implements Comparable {
+	long numerator;
+	long denominator;
+	
+	Fraction(String line) {
+		Scanner s = new Scanner(line);
+		numerator = s.nextLong();
+		denominator = s.nextLong();
+	}
+	
+	Fraction(long N, long D) {
+		numerator = N;
+		denominator = D;
+	}
+
+	@Override
+	public int compareTo(Object arg0) {
+		if (arg0 instanceof Double) {
+			return (new Double(toDouble())).compareTo((Double)arg0);
+		}
+		
+		return -1;
+	}
+	
+	public String toString() {
+		return numerator + "/" + denominator;
+	}
+	
+	public double toDouble() {
+		return numerator/(double)denominator;
+	}
+	
+	Fraction sub(Fraction other) {
+		long N = numerator * other.denominator - other.numerator * denominator;
+		long D = denominator * other.denominator;
+		return new Fraction(N, D);
+	}
+	
+	long largestUnit() {
+		return (long)Math.ceil(denominator/(double)numerator);
+	}
+		
+	void reduce() {
+		if (this.compareTo(new Double(0)) == 0) {
+			numerator = 0;
+			denominator = 1;
+			return;
+		}
+		
+		long gcd = gcd();
+		numerator /= gcd;
+		denominator /= gcd;
+	}
+	
+	long gcd() {
+		long n = numerator > denominator ? denominator : numerator;
+		for (long i = n; i>1; i--) {
+			if (numerator % i == 0 && denominator % i == 0) {
+				return i;
+			}
+		}
+		
+		return 1;
+	}
+}
