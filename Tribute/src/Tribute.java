@@ -33,92 +33,100 @@ public class Tribute {
 	
 	public static int procCommand(char cmd, ArrayList<Character> buffer, int cursor) {
 		switch (cmd) {
-		case 'x': {
-			buffer.remove(--cursor);
-			break;
-		}
-		case 'K': {
-			for (cursor--; cursor>=0; cursor--) {
-				if (buffer.get(cursor) == ' ') {
+			case 'x': {
+				if (cursor == 0) {
 					break;
-				} else {
+				}
+				
+				buffer.remove(--cursor);
+				break;
+			}
+			case 'K': {
+				for (cursor--; cursor>=0; cursor--) {
+					if (buffer.get(cursor) == ' ') {
+						break;
+					} else {
+						buffer.remove(cursor);
+					}
+				}
+				
+				cursor++;
+				break;
+			}
+			case 'c': {
+				if (cursor == 0) {
+					break;
+				}
+
+				Character c = buffer.get(cursor-1);
+				buffer.add(cursor++, c);
+				break;
+			}
+			case 'D': {
+				ArrayList<Character> dup = new ArrayList<Character>();
+				for (int i=cursor-1; i>=0; i--) {
+					if (buffer.get(i) == ' ') {
+						break;
+					} else {
+						dup.add(0, buffer.get(i));
+					}
+				}
+				
+				for (Character c : dup) {
+					buffer.add(cursor++, c);
+				}
+				
+				break;
+			}
+			case 'R': {
+				ArrayList<Character> rev = new ArrayList<Character>();
+				for (int i=cursor-1; i>=0; i--) {
+					if (buffer.get(i) == ' ') {
+						break;
+					} else {
+						rev.add(0, buffer.get(i));
+					}
+				}
+				
+				for (int i=0; i<rev.size(); i++) {
+					int index = cursor - rev.size() + i;
+					buffer.set(index, rev.get(rev.size()-i-1));
+				}
+				
+				break;
+			}
+			case 'p': {
+				while (cursor != 0) {
+					buffer.remove(--cursor);
+				}
+				break;
+			}
+			case 'W': {
+				while (cursor != buffer.size()) {
 					buffer.remove(cursor);
 				}
+				break;
 			}
-			
-			cursor++;
-			break;
-		}
-		case 'c': {
-			Character c = buffer.get(cursor-1);
-			buffer.add(cursor++, c);
-			break;
-		}
-		case 'D': {
-			ArrayList<Character> dup = new ArrayList<Character>();
-			for (int i=cursor-1; i>=0; i--) {
-				if (buffer.get(i) == ' ') {
-					break;
-				} else {
-					dup.add(0, buffer.get(i));
-				}
+			case 'h': {
+				cursor = Math.max(cursor-1, 0);
 			}
-			
-			for (Character c : dup) {
-				buffer.add(cursor++, c);
+				break;
+			case 'L': {
+				cursor = Math.min(cursor+1, buffer.size());
+				break;
 			}
-			
-			break;
-		}
-		case 'R': {
-			ArrayList<Character> rev = new ArrayList<Character>();
-			for (int i=cursor-1; i>=0; i--) {
-				if (buffer.get(i) == ' ') {
-					break;
-				} else {
-					rev.add(0, buffer.get(i));
-				}
+			case 'f': {
+				cursor = 0;
+				break;
 			}
-			
-			for (int i=0; i<rev.size(); i++) {
-				int index = cursor - rev.size() + i;
-				buffer.set(index, rev.get(rev.size()-i-1));
+			case 'G': {
+				cursor = buffer.size();
+				break;
 			}
-			
-			break;
-		}
-		case 'p': {
-			while (cursor != 0) {
-				buffer.remove(--cursor);
+			default: {
+				buffer.add(cursor++, cmd);
+				break;
 			}
-			break;
-		}
-		case 'W': {
-			while (cursor != buffer.size()) {
-				buffer.remove(cursor);
-			}
-			break;
-		}
-		case 'h': {
-			cursor--;
-		}
-			break;
-		case 'L': {
-			cursor++;
-			break;
-		}
-		case 'f': {
-			cursor = 0;
-			break;
-		}
-		case 'G': {
-			cursor = buffer.size();
-			break;
-		}
-		default: {
-			buffer.add(cursor++, cmd);
-			break;
-		}
 		}
 		
 		return cursor;
