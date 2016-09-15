@@ -1,0 +1,178 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Collisions {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		while (proc(s)) { }
+		s.close();
+	}
+	
+	public static boolean proc(Scanner s) {
+		Pair config = new Pair(s.nextLine());
+		if (shouldTerminate(config)) {
+			return false;
+		}
+		
+		// Read all of the queens from the input.
+		ArrayList<Pair> queens = new ArrayList<Pair>();
+		for (int i=0; i<config.y; i++) {
+			queens.addAll(generateQueens(s.nextLine()));
+		}
+		
+		// This will count the number of collisions for each queen.
+		ArrayList<Integer> collisions = new ArrayList<Integer>();
+		for (int i=0; i<queens.size(); i++) {
+			collisions.add(0);
+		}
+		
+		// For each Queen.
+		for (int i=0; i<queens.size(); i++) {
+			collisions.set(i, numCollisions(queens.get(i), queens, collisions, config.x));
+		}
+		
+		// Count the total number of collisions that we found.
+		int count = 0;
+		for (int i=0; i<collisions.size(); i++) {
+			count += collisions.get(i);
+		}
+
+		// Output the result;
+		System.out.println(count);
+
+		return true;
+	}
+	
+	public static Integer numCollisions(Pair Q, ArrayList<Pair> queens, ArrayList<Integer> collisions, int n) {
+		// Only consider queens that we will actually hit.
+		ArrayList<Integer> right = new ArrayList<Integer>();
+		ArrayList<Integer> left = new ArrayList<Integer>();
+		ArrayList<Integer> up = new ArrayList<Integer>();
+		ArrayList<Integer> down = new ArrayList<Integer>();
+
+		ArrayList<Integer> upright = new ArrayList<Integer>();
+		ArrayList<Integer> upleft = new ArrayList<Integer>();
+		ArrayList<Integer> downright = new ArrayList<Integer>();
+		ArrayList<Integer> downleft = new ArrayList<Integer>();
+
+		// Construct the collisions that occur with this queen in each direction.
+		for (int i=0; i<queens.size(); i++) {
+			Pair other = queens.get(i);
+
+			if (other.x == Q.x && other.y == Q.y) {
+				// Ignore self
+				continue; 
+			} else if (other.x == Q.x) {
+				if (other.y > Q.y) {
+					down.add(i);
+				} else {
+					up.add(i);
+				}
+			} else if (other.y == Q.y) {
+				if (other.x > Q.x) {
+					right.add(i);
+				} else {
+					left.add(i);
+				}
+			} else if (Math.abs(Q.x - other.x) == Math.abs(Q.y - other.y)) {
+				if (other.x > Q.x) {
+					if (other.y > Q.y) {
+						upright.add(i);
+					} else {
+						downright.add(i);
+					}
+				} else {
+					if (other.y > Q.y) {
+						upleft.add(i);
+					} else {
+						downleft.add(i);
+					}
+				}
+			}
+		}
+		
+		// Get the 8 nearest queens in all directions.
+		Integer Q0 = nearestQueen(Q, up, queens);
+		Integer Q1 = nearestQueen(Q, down, queens);
+		Integer Q2 = nearestQueen(Q, left, queens);
+		Integer Q3 = nearestQueen(Q, right, queens);
+		Integer Q4 = nearestQueen(Q, upleft, queens);
+		Integer Q5 = nearestQueen(Q, upright, queens);
+		Integer Q6 = nearestQueen(Q, downleft, queens);
+		Integer Q7 = nearestQueen(Q, downright, queens);
+		
+		int count = 0;
+		if (collisions.get(Q0) == 0) { count++; }
+		
+		return count;
+	}
+	
+	public static Integer nearestQueen(Pair Q, ArrayList<Integer> indecies, ArrayList<Pair> queens) {
+		Integer nearest = 0;
+		double dist = Double.MAX_VALUE;
+		for (int i=0; i<indecies.size(); i++) {
+			Pair queen = queens.get(indecies.get(i));
+			double tmp = Q.dist(queen);
+			if (tmp < dist) {
+				dist = tmp;
+				nearest = indecies.get(i);
+			}
+		}
+
+		return nearest;
+	}
+	
+	public static ArrayList<Pair> generateQueens(String line) {
+		Scanner scan = new Scanner(line);
+		ArrayList<Pair> queens = new ArrayList<Pair>();
+
+		int k = scan.nextInt();
+		int x = scan.nextInt();
+		int y = scan.nextInt();
+		int s = scan.nextInt();
+		int t = scan.nextInt();
+		
+		for (int i=0; i<k; i++) {
+			queens.add(new Pair(x + i*s, y + i*t));
+		}
+
+		scan.close();
+		return queens;
+	}
+	
+	public static boolean shouldTerminate(Pair p) {
+		return p.x == 0 && p.y == 0;
+	}
+}
+
+class Pair {
+	int x;
+	int y;
+	
+	Pair() {
+		x = 0;
+		y = 0;
+	}
+	
+	Pair(int X, int Y) {
+		x = X;
+		y = Y;
+	}
+	
+	Pair(String line) {
+		Scanner s = new Scanner(line);
+		x = s.hasNextInt() ? s.nextInt() : 0;
+		y = s.hasNextInt() ? s.nextInt() : 0;
+		s.close();
+	}
+	
+	double dist(Pair other) {
+		return Math.sqrt(Math.pow(other.x - x, 2) + Math.pow(other.y - y, 2));
+	}
+	
+	@Override
+	public String toString() {
+		return "(" + x + ", " + y + ")";
+	}
+}
