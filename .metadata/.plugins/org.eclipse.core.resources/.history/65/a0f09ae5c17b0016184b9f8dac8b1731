@@ -1,0 +1,246 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Compress {
+	public static void main(String[] args) {
+//		Scanner s = new Scanner(System.in);
+//		for (int n=1; proc(s, n); n++) { }
+//		s.close();
+		test();
+	}
+	
+	public static void test() {
+		int idx = 0;
+		for (int W=2; W<=64; W*=2) {
+			int T = 75;
+			Grid g = Grid.random(W);
+			System.out.println(g);
+			System.out.println();
+			Node r = g.toTree();
+			r.compress(T);
+			System.out.println("Image " + (++idx) + ":");
+			System.out.println(r.toGrid(g.width));
+		}
+	}
+	
+	public static boolean proc(Scanner s, int n) {
+		int W = s.nextInt();
+		if (W == 0) { return false; }
+		int T = s.nextInt();
+		s.nextLine(); // Finish the current line.
+		
+		// Create the initial image as a grid, this will be converted to a tree for compression
+		// then converted back into a grid to be printed out.
+		Grid g = new Grid(s, W);
+		Node r = g.toTree();
+		r.compress(T);
+		
+		System.out.println("Image " + n + ":");
+		System.out.println(r.toGrid(g.width));
+		return true;
+	}
+}
+
+class Grid {
+	int width;
+	ArrayList<Integer> elems;
+	
+	Grid(int W) {
+		width = W;
+		elems = new ArrayList<Integer>();
+
+		// Initialize to 0.
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<width; y++) {
+				elems.add(0);
+			}
+		}
+	}
+	
+	Grid(int W, int SET) {
+		width = W;
+		elems = new ArrayList<Integer>();
+
+		// Initialize to 0.
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<width; y++) {
+				elems.add(SET);
+			}
+		}
+	}
+	
+	Grid(Scanner s, int W) {
+		width = W;
+		elems = new ArrayList<Integer>();
+
+		// Read the list of elements from the standard input.
+		for (int y=0; y<width; y++) {
+			String line = s.nextLine();
+			for (int x=0; x<width; x++) {
+				Character c = line.charAt(x);
+				elems.add(c == '0' ? 0 : 1);
+			}
+		}
+	}
+	
+	public static Grid random(int W) {
+		Grid g = new Grid(W);
+		for (int i=0; i<g.elems.size(); i++) {
+			int e = Math.random() > 0.5 ? 1 : 0;
+			g.elems.set(i, e);
+		}
+		
+		return g;
+	}
+	
+	public void setStartingAt(Grid G, int X, int Y) {
+		for (int y=0; y<G.width; y++) {
+			for (int x=0; x<G.width; x++) {
+				int idx = (y+Y) * width + (x+X);
+				int val = G.elems.get(y * G.width + x);
+				elems.set(idx, val);
+			}
+		}
+	}
+	
+	public Node toTree() {
+		if (width == 1) {
+			Node root = new Node();
+			root.perc_black = elems.get(0) == 0 ? 1.0 : 0.0;
+			return root;
+		} else {
+			Node root = new Node();
+			root.c0 = quadrent(0).toTree();
+			root.c1 = quadrent(1).toTree();
+			root.c2 = quadrent(2).toTree();
+			root.c3 = quadrent(3).toTree();
+			return root;
+		}
+	}
+	
+	public Grid quadrent(int Q) {
+		Grid g = new Grid(width/2);
+		int startx = 0;
+		int starty = 0;
+		if (Q == 1) {
+			startx = width/2;
+		} else if (Q == 2) {
+			starty = width/2;
+		} else if (Q == 3) {
+			startx = width/2;
+			starty = width/2;
+		}
+
+		int idx = 0;
+		for (int y=0; y<width/2; y++) {
+			for (int x=0; x<width/2; x++) {
+				g.elems.set(idx++, elems.get((y+starty) * width + (x+startx)) );
+			}
+		}
+
+		return g;
+	}
+	
+	@Override
+	public String toString() {
+		String out = "";
+		for (int i=0; i<elems.size(); i++) {
+			out += elems.get(i);
+			out += (i+1) % width == 0 ? "\n" : "";
+		}
+
+		// Exclude the extra added space.
+		return out.substring(0, out.length()-1);
+	}
+}
+
+class Node {
+	Node parent;
+	Node c0;
+	Node c1;
+	Node c2;
+	Node c3;
+	
+	public double perc_black;
+	
+	Node() {
+		parent = null;
+		c0 = null;
+		c1 = null;
+		c2 = null;
+		c3 = null;
+		perc_black = 0.0;
+	}
+	
+	Node(Node P) {
+		parent = P;
+		c0 = null;
+		c1 = null;
+		c2 = null;
+		c3 = null;
+		perc_black = 0.0;
+	}
+	
+	public Grid toGrid(int width) {
+		if (hasChildren()) {
+			Grid g0 = c0.toGrid(width/2);
+			Grid g1 = c1.toGrid(width/2);
+			Grid g2 = c2.toGrid(width/2);
+			Grid g3 = c3.toGrid(width/2);
+			
+			Grid g = new Grid(width);
+			g.setStartingAt(g0, 0, 0);
+			g.setStartingAt(g1, width/2, 0);
+			g.setStartingAt(g2, 0, width/2);
+			g.setStartingAt(g3, width/2, width/2);
+			return g;
+		} else {
+			Grid g = new Grid(width, (perc_black > 0) ? 0 : 1);
+			return g;
+		}
+	}
+	
+	void compress(int threshold) {
+		if (!hasChildren()) {
+			return;
+		} else {
+			// First compress ourself.
+			int p = (int)(percentageBlack() * 100);
+			if (p >= threshold) {
+				killallChildren();
+				perc_black = 1.0;
+			} else if (100 - p >= threshold) {
+				killallChildren();
+				perc_black = 0.0;
+			} else {
+				 // No compression on self, compress children instead.
+				c0.compress(threshold);
+				c1.compress(threshold);
+				c2.compress(threshold);
+				c3.compress(threshold);
+			}
+		}
+	}
+	
+	void killallChildren() {
+		c0 = null;
+		c1 = null;
+		c2 = null;
+		c3 = null;
+	}
+	
+	double percentageBlack() {
+		if (!hasChildren()) {
+			return perc_black;
+		} else {
+			return ( c0.percentageBlack() + 
+					 c1.percentageBlack() +
+					 c2.percentageBlack() +
+					 c3.percentageBlack() ) / 4.0;
+		}
+	}
+	
+	boolean hasChildren() {
+		return c0 != null;
+	}
+}

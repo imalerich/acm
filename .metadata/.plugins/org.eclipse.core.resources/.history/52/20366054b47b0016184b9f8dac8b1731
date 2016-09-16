@@ -1,0 +1,16 @@
+import java.util.Scanner;
+
+public class Compress {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		// TODO
+		s.close();
+	}
+}
+
+class Node {
+	Node c0;
+	Node c1;
+	Node c2;
+	Node c3;
+}

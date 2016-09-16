@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class Compress {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		// TODO
+		s.close();
+	}
+}
+
+class Node {
+	Node c0;
+	Node c1;
+	Node c2;
+	Node c3;
+	
+	private double perc_black;
+	
+	Node() {
+		c0 = null;
+		c1 = null;
+		c2 = null;
+		c3 = null;
+		perc_black = 0;
+	}
+	
+	double percentageBlack() {
+		if (!hasChildren()) {
+			return perc_black;
+		}
+	}
+	
+	boolean hasChildren() {
+		return c0 != null;
+	}
+}
