@@ -11,7 +11,7 @@ public class Compress {
 	public static void test() {
 		int idx = 0;
 		for (int W=1; W<=64; W*=2) {
-			int T = 100;
+			int T = 51;
 			Grid g = Grid.random(W);
 			System.out.println(g);
 			System.out.println();
@@ -106,7 +106,7 @@ class Grid {
 	public Node toTree() {
 		if (width == 1) {
 			Node root = new Node();
-			root.is_black = elems.get(0) == 0;
+			root.perc_black = elems.get(0) == 0 ? 1.0 : 0.0;
 			return root;
 		} else {
 			Node root = new Node();
@@ -161,7 +161,7 @@ class Node {
 	Node c2;
 	Node c3;
 	
-	public boolean is_black;
+	public double perc_black;
 	
 	Node() {
 		parent = null;
@@ -169,7 +169,16 @@ class Node {
 		c1 = null;
 		c2 = null;
 		c3 = null;
-		is_black = true;
+		perc_black = 0.0;
+	}
+	
+	Node(Node P) {
+		parent = P;
+		c0 = null;
+		c1 = null;
+		c2 = null;
+		c3 = null;
+		perc_black = 0.0;
 	}
 	
 	public Grid toGrid(int width) {
@@ -186,7 +195,7 @@ class Node {
 			g.setStartingAt(g3, width/2, width/2);
 			return g;
 		} else {
-			Grid g = new Grid(width, is_black ? 0 : 1);
+			Grid g = new Grid(width, (perc_black > 0) ? 0 : 1);
 			return g;
 		}
 	}
@@ -196,13 +205,13 @@ class Node {
 			return;
 		} else {
 			// First compress ourself.
-			double EPSILON = 0.000001;
-			if (Math.abs(100 * percentageBlack() - (double)threshold) < EPSILON) {
+			int p = (int)(percentageBlack() * 100);
+			if (p >= threshold) {
 				killallChildren();
-				is_black = true;
-			} else if (Math.abs(100 * percentageWhite() - (double)threshold) < EPSILON) {
+				perc_black = 1.0;
+			} else if (100 - p >= threshold) {
 				killallChildren();
-				is_black = false;
+				perc_black = 0.0;
 			} else {
 				 // No compression on self, compress children instead.
 				c0.compress(threshold);
@@ -222,23 +231,12 @@ class Node {
 	
 	double percentageBlack() {
 		if (!hasChildren()) {
-			return is_black ? 1.0 : 0.0;
+			return perc_black;
 		} else {
 			return ( c0.percentageBlack() + 
 					 c1.percentageBlack() +
 					 c2.percentageBlack() +
 					 c3.percentageBlack() ) / 4.0;
-		}
-	}
-	
-	double percentageWhite() {
-		if (!hasChildren()) {
-			return is_black ? 0.0 : 1.0;
-		} else {
-			return ( c0.percentageWhite() + 
-					 c1.percentageWhite() +
-					 c2.percentageWhite() +
-					 c3.percentageWhite() ) / 4.0;
 		}
 	}
 	

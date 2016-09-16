@@ -1,3 +1,4 @@
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -106,7 +107,7 @@ class Grid {
 	public Node toTree() {
 		if (width == 1) {
 			Node root = new Node();
-			root.is_black = elems.get(0) == 0;
+			root.perc_black = elems.get(0) == 0 ? 1.0 : 0.0;
 			return root;
 		} else {
 			Node root = new Node();

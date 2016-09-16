@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="729" key="DIALOG_X_ORIGIN"/>
+		<item value="408" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="buffer.add" key="selection"/>
+		<item value="new Node" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="buffer.add"/>
-			<item value="println"/>
-			<item value="System.out"/>
-			<item value="com"/>
-			<item value="k"/>
+			<item value="perc_black"/>
+			<item value="new Node"/>
+			<item value="compress"/>
+			<item value="toString"/>
+			<item value="percentage"/>
+			<item value="depth()"/>
+			<item value="addallChildren"/>
+			<item value="percentageBlack"/>
 		</list>
 		<list key="replacehistory">
 		</list>

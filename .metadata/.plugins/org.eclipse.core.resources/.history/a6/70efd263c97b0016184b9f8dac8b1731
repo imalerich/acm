@@ -1,10 +1,20 @@
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Compress {
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
-		for (int n=1; proc(s, n); n++) { }
+//		for (int n=1; proc(s, n); n++) { }
+		Grid g0 = new Grid(s, 8);
+		System.out.println(g0.quadrent(0));
+		System.out.println();
+		System.out.println(g0.quadrent(1));
+		System.out.println();
+		System.out.println(g0.quadrent(2));
+		System.out.println();
+		System.out.println(g0.quadrent(3));
+		System.out.println();
 		s.close();
 	}
 	
@@ -106,7 +116,7 @@ class Grid {
 	public Node toTree() {
 		if (width == 1) {
 			Node root = new Node();
-			root.is_black = elems.get(0) == 0;
+			root.perc_black = elems.get(0) == 0 ? 1.0 : 0.0;
 			return root;
 		} else {
 			Node root = new Node();
@@ -161,7 +171,7 @@ class Node {
 	Node c2;
 	Node c3;
 	
-	public boolean is_black;
+	public double perc_black;
 	
 	Node() {
 		parent = null;
@@ -169,7 +179,7 @@ class Node {
 		c1 = null;
 		c2 = null;
 		c3 = null;
-		is_black = true;
+		perc_black = 0.0;
 	}
 	
 	public Grid toGrid(int width) {
@@ -186,7 +196,7 @@ class Node {
 			g.setStartingAt(g3, width/2, width/2);
 			return g;
 		} else {
-			Grid g = new Grid(width, is_black ? 0 : 1);
+			Grid g = new Grid(width, (perc_black > 0) ? 0 : 1);
 			return g;
 		}
 	}
@@ -199,10 +209,10 @@ class Node {
 			double EPSILON = 0.000001;
 			if (Math.abs(100 * percentageBlack() - (double)threshold) < EPSILON) {
 				killallChildren();
-				is_black = true;
+				perc_black = 1.0;
 			} else if (Math.abs(100 * percentageWhite() - (double)threshold) < EPSILON) {
 				killallChildren();
-				is_black = false;
+				perc_black = 0.0;
 			} else {
 				 // No compression on self, compress children instead.
 				c0.compress(threshold);
@@ -222,7 +232,7 @@ class Node {
 	
 	double percentageBlack() {
 		if (!hasChildren()) {
-			return is_black ? 1.0 : 0.0;
+			return perc_black;
 		} else {
 			return ( c0.percentageBlack() + 
 					 c1.percentageBlack() +
@@ -233,7 +243,7 @@ class Node {
 	
 	double percentageWhite() {
 		if (!hasChildren()) {
-			return is_black ? 0.0 : 1.0;
+			return 1.0 - perc_black;
 		} else {
 			return ( c0.percentageWhite() + 
 					 c1.percentageWhite() +
