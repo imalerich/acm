@@ -1,0 +1,14 @@
+import java.util.Scanner;
+
+public class Flood {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		for (int n=0; proc(s.nextLine(), ++n);) { }
+		s.close();
+	}
+
+	public static boolean proc(Scanner s) {
+		//
+	}
+}

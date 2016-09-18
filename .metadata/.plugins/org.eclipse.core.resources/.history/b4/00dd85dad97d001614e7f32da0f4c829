@@ -1,0 +1,54 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class Flood {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		for (int n=0; proc(s, ++n);) { }
+		s.close();
+	}
+
+	public static boolean proc(Scanner s, int n) {
+		Dim dim = new Dim(s.nextLine());
+		if (shouldTerminate(dim)) {
+			return false;
+		}
+		
+		ArrayList<Integer> grid = new ArrayList<Integer>();
+		for (int i=0; i<dim.width * dim.height; i++) {
+			grid.add(s.nextInt());
+		}
+		s.nextLine(); // Skip to the beginning of the next dimension input.
+		
+		Integer max = Collections.max(grid);
+		for (int i=0; i<max; i++) {
+		}
+		
+		System.out.println(grid);
+		return true;
+	}
+		
+	public static boolean checkIslands(Dim dim, ArrayList<Integer> island, int level) {
+		//
+		
+		return false;
+	}
+	
+	public static boolean shouldTerminate(Dim dim) {
+		return dim.width == 0 || dim.height == 0;
+	}
+}
+
+class Dim {
+	int width;
+	int height;
+	
+	Dim(String line) {
+		Scanner s = new Scanner(line);
+		width = s.nextInt();
+		height = s.nextInt();
+		s.close();
+	}
+}

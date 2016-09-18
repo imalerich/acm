@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class Flood {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		for (int n=0; proc(s.nextLine(), ++n);) { }
+		s.close();
+	}
+
+	public static boolean proc(Scanner s, int n) {
+		Dimm dimm = new Dimm(s.nextLine());
+		if (shouldTerminate(dimm)) {
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean shouldTerminate(Dimm dimm) {
+		return dimm.width == 0 || dimm.height == 0;
+	}
+}
+
+class Dimm {
+	int width;
+	int height;
+	
+	Dimm(String line) {
+		Scanner s = new Scanner(line);
+		width = s.nextInt();
+		height = s.nextInt();
+		s.close();
+	}
+}

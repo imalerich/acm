@@ -1,0 +1,130 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class Flood {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		for (int n=0; proc(s, ++n);) { }
+		s.close();
+	}
+
+	public static boolean proc(Scanner s, int n) {
+		Dim dim = new Dim(s.nextLine());
+		if (shouldTerminate(dim)) {
+			return false;
+		}
+		
+		ArrayList<Integer> grid = new ArrayList<Integer>();
+		for (int i=0; i<dim.width * dim.height; i++) {
+			grid.add(s.nextInt());
+		}
+		s.nextLine(); // Skip to the beginning of the next dimension input.
+		
+		Integer max = Collections.max(grid);
+		for (int i=0; i<max; i++) {
+			if (!onlyOneIsland(dim, grid, i)) {
+				System.out.println("Case " + n + ": " + "Island splits when ocean rises " + i + " feet.");
+				return true;
+			}
+		}
+
+		System.out.println("Case " + n + ": " + "Island never splits.");
+		return true;
+	}
+		
+	public static boolean onlyOneIsland(Dim dim, ArrayList<Integer> island, int level) {
+		// Strategy: find an island, sink it, if there is anything left, return false;
+		ArrayList<Integer> grid = new ArrayList<Integer>();
+		int start = -1; // We will sink one island here.
+		for (int i=0; i<island.size(); i++) {
+			if (island.get(i) <= level) {
+				grid.add(0);
+			} else {
+				start = 1;
+				grid.add(1);
+			}
+		}
+	
+		if (start == -1) {
+			return false;
+		}
+		
+		sinkNeighbors(grid, dim, start);
+		Integer max = Collections.max(grid);
+		return max == 0;
+	}
+	
+	public static void sinkNeighbors(ArrayList<Integer> island, Dim dim, int idx) {
+		// If we are under water, then do nothing.
+		if (island.get(idx) == 0) {
+			return;
+		}
+		
+		// Sink ourself
+		island.set(idx, 0);
+		
+		// Then sink a of our neighbors.
+		ArrayList<Integer> n = neighbors(idx, dim);
+		for (Integer i : n) {
+			sinkNeighbors(island, dim, i);
+		}
+	}
+	
+	public static ArrayList<Integer> neighbors(int idx, Dim dim) {
+		ArrayList<Integer> neighbors = new ArrayList<Integer>();
+		Pair pos = new Pair(idx, dim);
+		
+		// There are at most 4 neighbors, maybe less.
+		if (pos.x > 0) {
+			neighbors.add((new Pair(pos.x-1, pos.y)).toIndex(dim));
+		}
+		if (pos.y > 0) {
+			neighbors.add((new Pair(pos.x, pos.y-1)).toIndex(dim));
+		}
+		if (pos.x < dim.width-2) {
+			neighbors.add((new Pair(pos.x+1, pos.y)).toIndex(dim));
+		}
+		if (pos.y < dim.height-2) {
+			neighbors.add((new Pair(pos.x, pos.y+1)).toIndex(dim));
+		}
+		
+		return neighbors;
+	}
+	
+	public static boolean shouldTerminate(Dim dim) {
+		return dim.width == 0 || dim.height == 0;
+	}
+}
+
+class Pair {
+	int x;
+	int y;
+	
+	Pair(int X, int Y) {
+		x = X;
+		y = Y;
+	}
+	
+	Pair(int index, Dim dim) {
+		y = index/dim.width;
+		x = (index - y * dim.width);
+	}
+	
+	int toIndex(Dim dim) {
+		return y * dim.width + x;
+	}
+}
+
+class Dim {
+	int width;
+	int height;
+	
+	Dim(String line) {
+		Scanner s = new Scanner(line);
+		width = s.nextInt();
+		height = s.nextInt();
+		s.close();
+	}
+}
