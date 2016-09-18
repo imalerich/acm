@@ -55,12 +55,14 @@ public class Flood {
 		
 	public static boolean onlyOneIsland(Dim dim, ArrayList<Integer> island, int level) {
 		// Strategy: find an island, sink it, if there is anything left, return false;
-		ArrayList<Integer> grid = new ArrayList<Integer>(island);
+		ArrayList<Integer> grid = new ArrayList<Integer>();
 		int start = -1; // We will sink one island here.
 		for (int i=0; i<island.size(); i++) {
-			if (island.get(i) > level) {
+			if (island.get(i) <= level) {
+				grid.add(0);
+			} else {
 				start = i;
-				break;
+				grid.add(1);
 			}
 		}
 	
@@ -68,14 +70,14 @@ public class Flood {
 			return false;
 		}
 		
-		sinkNeighbors(grid, dim, start, level);
+		sinkNeighbors(grid, dim, start);
 		Integer max = Collections.max(grid);
-		return max <= level;
+		return max == 0;
 	}
 	
-	public static void sinkNeighbors(ArrayList<Integer> island, Dim dim, int idx, int level) {
+	public static void sinkNeighbors(ArrayList<Integer> island, Dim dim, int idx) {
 		// If we are under water, then do nothing.
-		if (island.get(idx) <= level) {
+		if (island.get(idx) == 0) {
 			return;
 		}
 		
@@ -85,7 +87,7 @@ public class Flood {
 		// Then sink a of our neighbors.
 		ArrayList<Integer> n = neighbors(idx, dim);
 		for (Integer i : n) {
-			sinkNeighbors(island, dim, i, level);
+			sinkNeighbors(island, dim, i);
 		}
 	}
 	

@@ -70,7 +70,7 @@ public class Flood {
 		
 		sinkNeighbors(grid, dim, start, level);
 		Integer max = Collections.max(grid);
-		return max <= level;
+		return max == 0;
 	}
 	
 	public static void sinkNeighbors(ArrayList<Integer> island, Dim dim, int idx, int level) {
