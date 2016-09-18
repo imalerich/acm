@@ -1,0 +1,192 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+public class Arithmetic {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		for (int n=0; proc(s.nextLine(), ++n);) { }
+		s.close();
+	}
+	
+	public static boolean proc(String line, int n) {
+		Quad q = new Quad(line);
+		if (shouldTerminate(q)) { return false; }
+		
+		ArrayList<Quad> perms = q.UniquePermutations4();
+		ArrayList<Op3> ops = ops();
+		
+		Set<Integer> tmp = new HashSet<Integer>();
+		for (Quad p : perms) {
+			for (Op3 op : ops) {
+				if (isOpValid(p, op)) {
+					tmp.add(calc(p, op));
+				}
+			}
+		}
+		
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		results.addAll(tmp);
+		Collections.sort(results);
+						
+		int min = 0;
+		int max = 0;
+		
+		int tmpmin = 0;
+		int tmpmax = 0;
+		
+		for (int i=1; i<results.size(); i++) {
+			if (resuts.get(i) == results.get(i-1)) {
+				//
+			}
+		}
+		
+		System.out.println("Case " + n + ": " + results.get(min) + " to " + results.get(max));
+		return true;
+	}
+	
+	public static boolean isOpValid(Quad q, Op3 op) {
+		int partial0 = calc(q.first, q.second, op.op1);
+		int partial1 = calc(partial0, q.third, op.op2);
+		
+		if (op.op1 == OP.DIV) {
+			if (q.first % q.second != 0) {
+				return false;
+			}
+		} else if (op.op2 == OP.DIV) {
+			if (partial0 % q.third != 0) {
+				return false;
+			}
+		} else if (op.op3 == OP.DIV) {
+			if (partial1 % q.fourth != 0) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public static int calc(Quad q, Op3 op) {
+		int partial0 = calc(q.first, q.second, op.op1);
+		int partial1 = calc(partial0, q.third, op.op2);
+		return calc(partial1, q.fourth, op.op3);
+	}
+	
+	public static int calc(int first, int second, OP op) {
+		switch (op) {
+		case PLUS:
+			return first + second;
+		case MINUS:
+			return first - second;
+		case MULT:
+			return first * second;
+		case DIV:
+			return first / second;
+		}
+		
+		return 0;
+	}
+	
+	public static boolean shouldTerminate(Quad Q) {
+		return Q.first == 0 && Q.second == 0 && Q.third == 0 && Q.fourth == 0;
+	}
+	
+	public static ArrayList<Op3> ops() {
+		ArrayList<Op3> out = new ArrayList<Op3>();
+		for (int i=0; i<OP.values().length; i++) {
+			for (int j=0; j<OP.values().length; j++) {
+				for (int k=0; k<OP.values().length; k++) {
+					out.add(new Op3(OP.values()[i], OP.values()[j], OP.values()[k]));
+				}
+			}
+		}
+		
+		return out;
+	}
+}
+
+enum OP {
+	PLUS, MINUS, MULT, DIV;
+}
+
+class Op3 {
+	OP op1;
+	OP op2;
+	OP op3;
+	
+	Op3(OP First, OP Second, OP Third) {
+		op1 = First;
+		op2 = Second;
+		op3 = Third;
+	}
+}
+
+class Quad {
+	int first;
+	int second;
+	int third;
+	int fourth;
+	
+	Quad(String line) {
+		Scanner s = new Scanner(line);
+		first = s.nextInt();
+		second = s.nextInt();
+		third = s.nextInt();
+		fourth = s.nextInt();
+		s.close();
+	}
+	
+	Quad(int First, int Second, int Third, int Fourth) {
+		first = First;
+		second = Second;
+		third = Third;
+		fourth = Fourth;
+	}
+	
+	@Override
+	public String toString() {
+		return first + " " + second + " " + third + " " + fourth;
+	}
+	
+	ArrayList<Quad> UniquePermutations4() {
+		ArrayList<Quad> out = new ArrayList<Quad>();
+		
+		// Ugly as fuck, please ignore.
+		for (int i=0; i<size(); i++) {
+			for (int j=0; j<size(); j++) {
+				for (int k=0; k<size(); k++) {
+					for (int l=0; l<size(); l++) {
+						if (i != j && i != k && i != l
+								&& j != k && j != l 
+								&& k != l) {
+							out.add(new Quad(get(i), get(j), get(k), get(l)));
+						}
+					}
+				}
+			}
+		}
+		
+		return out;
+	}
+		
+	int size() {
+		return 4;
+	}
+	
+	int get(int index) {
+		switch (index) {
+		case 0:
+			return first;
+		case 1:
+			return second;
+		case 2:
+			return third;
+		case 3:
+			return fourth;
+		default:
+			return 0;
+		}
+	}
+}

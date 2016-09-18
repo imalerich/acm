@@ -1,0 +1,24 @@
+import java.util.ArrayList;
+
+public class Arithmetic {
+
+}
+
+class ArithmeticSet<T> {
+	ArrayList<T> values;
+	
+	ArithmeticSet(T First, T Second, T Third, T Fourth) {
+		values = new ArrayLisT<T>();
+		values.add(First);
+		values.add(Second);
+		values.add(Third);
+		values.add(Fourth);
+	}
+	
+	ArrayList<Quad> Permutations() {
+		ArayList<Quad> out = new ArayList<Quad>();
+		for (int i=;)
+		
+		return out;
+	}
+}

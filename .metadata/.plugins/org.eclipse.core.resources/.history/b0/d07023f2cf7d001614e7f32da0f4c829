@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+
+public class Arithmetic {
+
+}
+
+class Quad<T> {
+	T first;
+	T second;
+	T third;
+	T fourth;
+	
+	Quad(T First, T Second, T Third, T Fourth) {
+		first = First;
+		second = Second;
+		third = Third;
+		fourth = Fourth;
+	}
+	
+	ArrayList<Quad<T>> Permutations() {
+		ArrayList<Quad<T>> out = new ArrayList<Quad<T>>();
+		for (int i=0; i<size(); i++) {
+			for (int j=0; j<size(); j++) {
+				for (int k=0; k<size(); k++) {
+					for (int l=0; l<size(); l++) {
+						if (i != j && i != k && i != l
+								&& j != k && j != l && k != l) {
+							out.add(new Quad<T>(get(i), get(j), get(k), get(l)));
+						}
+					}
+				}
+			}
+		}
+		
+		return out;
+	}
+	
+	int size() {
+		return 4;
+	}
+	
+	T get(int index) {
+		switch (index) {
+		case 0:
+			return first;
+		case 1:
+			return second;
+		case 2:
+			return third;
+		case 3:
+			return fourth;
+		default:
+			return null;
+		}
+	}
+}

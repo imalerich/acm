@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+
+public class Arithmetic {
+
+}
+
+class Quad<T> {
+	T first;
+	T second;
+	T third;
+	T fourth;
+	
+	ArithmeticSet(T First, T Second, T Third, T Fourth) {
+		first = First;
+		second = Second;
+		third = Third;
+		fourth = Fourth;
+	}
+	
+	ArrayList<Quad<T>> Permutations() {
+		ArrayList<Quad<T>> out = new ArrayList<Quad<T>>();
+		for (int i=0; i<values.size(); i++) {
+			for (int j=0; j<values.size(); j++) {
+				if (i != j) {
+					
+				}
+			}
+		}
+		
+		return out;
+	}
+}

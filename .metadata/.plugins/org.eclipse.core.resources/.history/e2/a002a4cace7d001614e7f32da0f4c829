@@ -1,0 +1,23 @@
+import java.util.ArrayList;
+
+public class Arithmetic {
+
+}
+
+class Quad {
+	int first;
+	int second;
+	int third;
+	int fourth;
+	
+	Quad(int First, int Second, int Third, int Fourth) {
+		first = First;
+		second = Second;
+		third = Third;
+		fourth = Fourth;
+	}
+	
+	ArrayList<Quad> Permutations() {
+		//
+	}
+}
