@@ -1831,3 +1831,154 @@ org.eclipse.recommenders.utils.Logs$LogTraceException
 	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
 	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
 	at java.lang.Thread.run(Unknown Source)
+!SESSION 2016-09-25 13:07:07.006 -----------------------------------------------
+eclipse.buildId=4.6.0.I20160606-1100
+java.version=1.8.0_102
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 2 10035 2016-09-25 13:10:19.207
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.jface 2 0 2016-09-25 13:10:22.219
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-09-25 13:10:22.219
+!MESSAGE A conflict occurred for ALT+CTRL+P:
+Binding(ALT+CTRL+P,
+	ParameterizedCommand(Command(org.eclipse.m2e.profiles.ui.commands.selectMavenProfileCommand,Select Maven Profiles,
+		,
+		Category(org.eclipse.ui.category.window,Window,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@16019c16,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+CTRL+P,
+	ParameterizedCommand(Command(org.eclipse.linuxtools.changelog.core.preparechangelog,Prepare Changelog,
+		Prepares Changelog,
+		Category(org.eclipse.linuxtools.changelog,Changelog,Changelog key bindings,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2b59285c,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-09-25 13:10:22.219
+!MESSAGE A conflict occurred for CTRL+SHIFT+TAB:
+Binding(CTRL+SHIFT+TAB,
+	ParameterizedCommand(Command(org.eclipse.papyrus.editor.previousTabCommand,Previous Tab,
+		,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2ea7e25d,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+TAB,
+	ParameterizedCommand(Command(org.eclipse.ui.window.previousEditor,Previous Editor,
+		Switch to the previous editor,
+		Category(org.eclipse.ui.category.window,Window,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@692cab82,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2016-09-25 13:10:22.219
+!MESSAGE A conflict occurred for CTRL+TAB:
+Binding(CTRL+TAB,
+	ParameterizedCommand(Command(org.eclipse.papyrus.editor.nextTabCommand,Next Tab,
+		,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@73d76b9d,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+TAB,
+	ParameterizedCommand(Command(org.eclipse.ui.window.nextEditor,Next Editor,
+		Switch to the next editor,
+		Category(org.eclipse.ui.category.window,Window,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@11aeb673,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-09-25 13:10:27.335
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\imm'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.jface.text 2 0 2016-09-25 13:27:13.449
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2016-09-25 13:27:13.454
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY org.eclipse.jface.text 2 0 2016-09-25 13:27:49.506
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2016-09-25 13:27:49.511
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY org.eclipse.recommenders.types.rcp 1 4 2016-09-25 13:28:21.869
+!MESSAGE Full project indexing required:
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\charsets.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\access-bridge-64.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\cldrdata.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\dnsns.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\jaccess.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\jfxrt.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\localedata.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\nashorn.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\sunec.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\sunjce_provider.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\sunmscapi.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\sunpkcs11.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\zipfs.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\jce.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\jfr.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\jsse.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\resources.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\rt.jar
+
+!STACK 0
+org.eclipse.recommenders.utils.Logs$LogTraceException
+	at org.eclipse.recommenders.utils.Logs$LogTraceException.newTrace(Logs.java:381)
+	at org.eclipse.recommenders.utils.Logs.log(Logs.java:134)
+	at org.eclipse.recommenders.internal.types.rcp.ProjectTypesIndex.needsRebuild(ProjectTypesIndex.java:169)
+	at org.eclipse.recommenders.internal.types.rcp.ProjectTypesIndex.startUp(ProjectTypesIndex.java:122)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+
+!ENTRY org.eclipse.recommenders.types.rcp 1 4 2016-09-25 14:15:45.943
+!MESSAGE Full project indexing required:
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\charsets.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\access-bridge-64.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\cldrdata.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\dnsns.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\jaccess.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\jfxrt.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\localedata.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\nashorn.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\sunec.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\sunjce_provider.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\sunmscapi.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\sunpkcs11.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\ext\zipfs.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\jce.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\jfr.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\jsse.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\resources.jar
+  [+] C:\Program Files\Java\jre1.8.0_102\lib\rt.jar
+
+!STACK 0
+org.eclipse.recommenders.utils.Logs$LogTraceException
+	at org.eclipse.recommenders.utils.Logs$LogTraceException.newTrace(Logs.java:381)
+	at org.eclipse.recommenders.utils.Logs.log(Logs.java:134)
+	at org.eclipse.recommenders.internal.types.rcp.ProjectTypesIndex.needsRebuild(ProjectTypesIndex.java:169)
+	at org.eclipse.recommenders.internal.types.rcp.ProjectTypesIndex.startUp(ProjectTypesIndex.java:122)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+
+!ENTRY org.eclipse.debug.ui 4 0 2016-09-25 14:18:14.247
+!MESSAGE Tab group extension: org.eclipse.cdt.launch.applicationProfileLaunchTabGroup for type org.eclipse.cdt.launch.applicationLaunchType for the [profile] mode has been replaced by extension: org.eclipse.cdt.launch.applicationProfileLaunchTabGroup

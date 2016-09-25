@@ -1,0 +1,113 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class RoadSeries {
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int count = s.nextInt(); s.nextLine();
+		for (int i=1; i<=count; i++) { 
+			proc(s, i);
+		}
+		
+		s.close();
+	}
+
+	public static void proc(Scanner s, int idx) {
+		int k = s.nextInt();
+		int window = s.nextInt();
+		int complete = 0;
+		s.nextLine();
+		
+		ArrayList<Integer> found = new ArrayList<Integer>();
+		ArrayList<Integer> missing = getMissing(complete, window);
+		
+		for (int i=0; i<k; i++) {
+			ArrayList<Integer> arr = readNums(s.nextLine());
+			Collections.sort(arr);
+			
+			for (Integer n : arr) {
+				if (missing.contains(n)) {
+					// We found a new number!
+					missing.remove(missing.indexOf(n));
+					found.add(n);
+					
+					// Did we find a new complete?
+					if (missing.isEmpty()) { // Can only be empty if window size is 1.
+						complete++;
+						missing = getMissing(complete, window);
+					} else if (complete < missing.get(0) - 1) {
+						// Update the largest complete number and our search window.
+						complete = missing.get(0) - 1;
+						missing = getMissing(complete, window);
+					}
+				}
+			}
+		}
+		
+		Collections.sort(found);
+		System.out.print("Case " + idx + ": ");
+		if (found.isEmpty()) {
+			System.out.println(0 + " " + 0);
+		} else {
+			System.out.println(complete + " " + found.get(found.size()-1));
+		}
+	}
+	
+	public static ArrayList<Integer> getMissing(int complete, int window) {
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		for (int i=complete; i<complete+window; i++) {
+			arr.add(i+1);
+		}
+		
+		return arr;
+	}
+	
+	public static ArrayList<Integer> readNums(String line) {
+		Scanner s = new Scanner(procNums(line));
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		while (s.hasNextInt()) {
+			arr.add(s.nextInt());
+		}
+		
+		ArrayList<Integer> out = new ArrayList<Integer>();
+		for (Integer i : arr) {
+			out.addAll(subNums(i));
+		}
+		
+		Collections.sort(out);
+		System.out.println(out);
+		s.close();
+		return out;
+	}
+	
+	public static ArrayList<Integer> subNums(Integer i) {
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		String s = i.toString();
+		
+		// Get all substrings and convert them to their integer values.
+		for (int j=0; j<s.length(); j++) {
+			for (int k=1; k<=s.length()-j; k++) {
+				String sub = s.substring(j, j+k);
+				arr.add(Integer.parseInt(sub));
+			}
+		}
+		
+		return arr;
+	}
+	
+	public static String procNums(String line) {
+		String out = "";
+		for (int i=0; i<line.length(); i++) {
+			int c = line.charAt(i) - '0';
+			if (c >= 0 && c <= 9) {
+				out += line.charAt(i);
+			} else {
+				out += ' ';
+			}
+		}
+		
+		return out;
+	}
+}

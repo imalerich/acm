@@ -1,0 +1,35 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class RoadSeries {
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int count = s.nextInt(); s.nextLine();
+		for (int i=0; i<count; i++) { 
+			proc(s, i);
+		}
+		
+		s.close();
+	}
+
+	public static void proc(Scanner s, int idx) {
+		int k = s.nextInt();
+		int window = s.nextInt();
+		int complete = 0;
+		s.nextLine();
+		
+		for (int i=0; i<k; i++) {
+			ArrayList<Integer> arr = readNums(s.nextLine());
+		}
+		
+		System.out.print("Case " + idx + ": ");
+		System.out.println("0 0");
+	}
+	
+	public static ArrayList<Integer> readNums(String line) {
+		Scanner s = new Scanner(line);
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		return arr;
+	}
+}

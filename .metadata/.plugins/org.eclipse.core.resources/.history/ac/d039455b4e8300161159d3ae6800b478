@@ -1,0 +1,14 @@
+import java.util.Scanner;
+
+public class Backgammon {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		for (int i=0; proc(s.nextLine(), ++i);) { }
+		s.close();
+	}
+	
+	public static boolean proc(String line, int idx) {
+		return true;
+	}
+}

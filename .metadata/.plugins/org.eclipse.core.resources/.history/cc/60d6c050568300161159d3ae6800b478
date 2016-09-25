@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class RoadSeries {
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int count = s.nextInt(); s.nextLine();
+		for (int i=0; i<count; i++) { 
+			proc(s, i);
+		}
+		
+		s.close();
+	}
+
+	public static void proc(Scanner s, int idx) {
+		int k = s.nextInt();
+		int window = s.nextInt();
+		int complete = 0;
+		s.nextLine();
+		
+		for (int i=0; i<k; i++) {
+			ArrayList<Integer> missing = getMissing(complete, window);
+			ArrayList<Integer> arr = readNums(s.nextLine());
+			Collections.sort(arr);
+			
+			for (Integer i : arr) {
+				//
+			}
+		}
+		
+		System.out.print("Case " + idx + ": ");
+		System.out.println("0 0");
+	}
+	
+	public static ArrayList<Integer> getMissing(int complete, int window) {
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		for (int i=complete; i<complete+window; i++) {
+			arr.add(i+1);
+		}
+		
+		return arr;
+	}
+	
+	public static ArrayList<Integer> readNums(String line) {
+		Scanner s = new Scanner(procNums(line));
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		while (s.hasNextInt()) {
+			arr.add(s.nextInt());
+		}
+		
+		System.out.println(procNums(line));
+		System.out.println(arr);
+		s.close();
+		return arr;
+	}
+	
+	public static String procNums(String line) {
+		String out = "";
+		for (int i=0; i<line.length(); i++) {
+			int c = line.charAt(i) - '0';
+			if (c >= 0 && c <= 9) {
+				out += line.charAt(i);
+			} else {
+				out += ' ';
+			}
+		}
+		
+		return out;
+	}
+}

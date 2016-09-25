@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class RoadSeries {
+	
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int count = s.nextInt(); s.nextLine();
+		for (int i=0; i<count; i++) { 
+			proc(s, i);
+		}
+		
+		s.close();
+	}
+
+	public static boolean proc(Scanner s, int idx) {
+		int k = s.nextInt();
+		int w = s.nextInt();
+		
+		System.out.print("Case " + idx + ": ");
+		return true;
+	}
+}
